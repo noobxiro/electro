@@ -11,23 +11,24 @@ from google.cloud import pubsub_v1
 from concurrent import futures
 
 #### VARIABLES PUB/SUB
-credentials_path = '/home/pi/Desktop/IoT/colsan-iot-clave.json'
+credentials_path = '/home/pi/Desktop/IoT/proyecto1-ejemplo-clave.json'   ###Direccion de la clave  en el escritorio de raspberry
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
-topic_path = 'projects/colsan-iot/topics/iotprueba'
-subscriber_path = 'projects/colsan-iot/subscriptions/iotsub'
+topic_path = 'projects/ID_PROYECTO/topics/ID_TEMA'                ##direccion del TEMA(TOPIC) en GCP
+subscriber_path = 'projects/ID_PROYECTO/subscriptions/ID:SUBCRIPTIONS'       ### Direccion de la Subscripcion en GCP
 
 ##### vARIABLES CONEXION  IOTCORE(MQTT)
-ssl_private_key_filepath = '/home/pi/Desktop/IoT/rsa_private.pem'
+ssl_private_key_filepath = '/home/pi/Desktop/IoT/rsa_private.pem'      ###Direccion de la clave privada en el escritorio de raspberry
 ssl_algorithm = 'RS256' # Either RS256 or ES256
-root_cert_filepath = '/home/pi/Desktop/IoT/roots.pem'
-project_id = 'colsan-iot'
-gcp_location = 'us-central1'
-registry_id = 'registro-colsan'
-device_id = 'sensor-colsan'
+root_cert_filepath = '/home/pi/Desktop/IoT/roots.pem'                  ###Direccion de la clave roots en el escritorio de raspberry
+project_id = 'ID DEL PROYECTO'
+gcp_location = 'us-central1'            ###LOCALIZACION DEL PROYECTO CUANDO LO CREO
+registry_id = 'ID-REGISTRO'
+device_id = 'ID-DISPOSITIVO'
 
 
-############# #Configuracion GPIO
+
+############# #Configuracion PIN RASPBERRY GPIO
 GPIO.setmode(GPIO.BCM)
 
 pin=4
@@ -103,7 +104,7 @@ while True:
 ###### START CONFIG PUB/SUB
   
     publisher = pubsub_v1.PublisherClient()
-    topic_path = 'projects/colsan-iot/topics/iotprueba'
+    topic_path = 'projects/ID_PROYECTO/topics/ID_TEMA' 
     
     data = fecha
     data = data.encode('utf-8')
