@@ -1,4 +1,4 @@
-#!/usr/bin/python
+1#!/usr/bin/python
 
 from sense_emu import SenseHat
 import datetime
@@ -10,23 +10,20 @@ from google.cloud import pubsub_v1
 from concurrent import futures
 
 #### VARIABLES PUB/SUB
-credentials_path = '/home/pi/Desktop/IoT/colsan-iot-clave.json'
+credentials_path = '/home/pi/Desktop/IoT/proyecto1-ejemplo-clave.json'   ###Direccion de la clave  en el escritorio de raspberry
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
-topic_path = 'projects/colsan-iot/topics/iotprueba'
-subscriber_path = 'projects/colsan-iot/subscriptions/iotsub'
+topic_path = 'projects/ID_PROYECTO/topics/ID_TEMA'                ##direccion del TEMA(TOPIC) en GCP
+subscriber_path = 'projects/ID_PROYECTO/subscriptions/ID:SUBCRIPTIONS'       ### Direccion de la Subscripcion en GCP
 
 ##### vARIABLES CONEXION  IOTCORE(MQTT)
-credentials_path = '/home/pi/Desktop/IoT/colsan-iot-clave.json'
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
-ssl_private_key_filepath = '/home/pi/Desktop/IoT/rsa_private.pem'
+ssl_private_key_filepath = '/home/pi/Desktop/IoT/rsa_private.pem'      ###Direccion de la clave privada en el escritorio de raspberry
 ssl_algorithm = 'RS256' # Either RS256 or ES256
-root_cert_filepath = '/home/pi/Desktop/IoT/roots.pem'
-project_id = 'colsan-iot'
-gcp_location = 'us-central1'
-registry_id = 'registro-colsan'
-device_id = 'sensor-colsan'
-
+root_cert_filepath = '/home/pi/Desktop/IoT/roots.pem'                  ###Direccion de la clave roots en el escritorio de raspberry
+project_id = 'ID DEL PROYECTO'
+gcp_location = 'us-central1'            ###LOCALIZACION DEL PROYECTO CUANDO LO CREO
+registry_id = 'ID-REGISTRO'
+device_id = 'ID-DISPOSITIVO'
 
 ############### START MQTT CONFIG
 
@@ -84,10 +81,12 @@ while True:
     Presion = sense.get_pressure()
     Humedad = sense.get_humidity()
     
-    Temp = round(Temperatura, 1)
+##REDONDEO DE DECIMALES A 1    
+    Temp = round(Temperatura, 1)          
     Pres = round(Presion, 1)
     Hum = round(Humedad, 1)
-    
+ 
+##PASANDO VARIALBES A STRING
     T = str(Temp)
     P = str(Pres)
     H = str(Hum)
@@ -97,7 +96,7 @@ while True:
 
         payload = '{{********* "Fecha": {}************\n"Temperatura": {}, "Presión": {}, "Humedad": {} }}'.format(fecha,T, P, H)
 
-        print("{}\n".format(payload))   
+        print("{}\n".format(payload))    ### SE MOSTRARAN DATOS EN PANTALLA (CONSOLA)
 
     else:
         print("ERROR, revise el sensor")
@@ -109,9 +108,9 @@ while True:
 ###### START CONFIG PUB/SUB
   
     publisher = pubsub_v1.PublisherClient()
-    topic_path = 'projects/colsan-iot/topics/iotprueba'
+    topic_path = 'projects/ID_PROYECTO/topics/ID_TEMA'
     
-    data = fecha ## cuerpo del mensaje enviado a pub/sub
+    data = 'MENSAJE QUE DESEE ENVIAR COMO TITULO O DISCRIPTIVO' ## cuerpo del mensaje enviado a pub/sub
     data = data.encode('utf-8')
     attributes = {
         'Temperatura': T,
